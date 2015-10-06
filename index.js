@@ -113,10 +113,10 @@ var generateTempUserModel = function(User) {
     tempUserSchema = mongoose.Schema(tempUserSchemaObject);
 
     // copy over the methods of the schema
-    Object.keys(User.schema.methods).forEach(function(meth) { // tread lightly 
+    Object.keys(User.schema.methods).forEach(function(meth) { // tread lightly
         tempUserSchema.methods[meth] = User.schema.methods[meth];
     });
-    
+
     options.tempUserModel = mongoose.model(options.tempUserCollection, tempUserSchema);
 };
 
@@ -156,7 +156,7 @@ var createTempUser = function(user, callback) {
                         tempUserData[field] = user[field];
                     });
                 */
-                
+
             // copy credentials using ECMA 6>:
             tmpUserData = Object.assign(tmpUserData, user._doc);
             tempUserData[options.URLFieldName] = randtoken.generate(options.URLLength);
