@@ -158,7 +158,7 @@ var createTempUser = function(user, callback) {
                 */
 
             // copy credentials using ECMA 6>:
-            tmpUserData = Object.assign(tmpUserData, user._doc);
+            tempUserData = Object.assign(tempUserData, user._doc);
             tempUserData[options.URLFieldName] = randtoken.generate(options.URLLength);
             callback(new options.tempUserModel(tempUserData));
         }
