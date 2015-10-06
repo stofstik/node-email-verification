@@ -135,8 +135,25 @@ var createTempUser = function(user, callback) {
     if (!options.tempUserModel)
         throw new TypeError("Temporary user model not defined. Either you forgot to generate one or you did not predefine one.");
 
+    // convert dot notated string to object
+    // All the credit goed to: http://stackoverflow.com/a/6491621/2270963
+    Object.byString = function(o, s) {
+    s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+    s = s.replace(/^\./, '');           // strip a leading dot
+    var a = s.split('.');
+    for (var i = 0, n = a.length; i < n; ++i) {
+        var k = a[i];
+        if (k in o) {
+            o = o[k];
+        } else {
+            return;
+        }
+    }
+    return o;
+    }
+
     var query = {};
-    query[options.emailFieldName] = user[options.emailFieldName];
+    query[options.emailFieldName] = user[Object.byString(user, option.emailFieldName)];
 
     options.tempUserModel.findOne(query, function(err, existingUser) {
         if (err)
