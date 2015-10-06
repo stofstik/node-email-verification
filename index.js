@@ -150,6 +150,7 @@ var createTempUser = function(user, callback) {
                 newTempUser;
 
             // copy the credentials for the user
+            // TODO This does not work for nested fields!!!
             Object.keys(user._doc).forEach(function(field) {
                 tempUserData[field] = user[field];
             });
