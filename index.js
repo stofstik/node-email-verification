@@ -135,8 +135,7 @@ var createTempUser = function(user, callback) {
     if (!options.tempUserModel)
         throw new TypeError("Temporary user model not defined. Either you forgot to generate one or you did not predefine one.");
 
-    var query = {};
-    query[options.emailFieldName] = getNestedValue(user, options.emailFieldName, null);
+    var query = getNestedValue(user, options.emailFieldName, null);
 
     options.tempUserModel.findOne(query, function(err, existingUser) {
         if (err)
