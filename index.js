@@ -149,11 +149,16 @@ var createTempUser = function(user, callback) {
             var tempUserData = {},
                 newTempUser;
 
-            // copy the credentials for the user
-            // TODO This does not work for nested fields!!!
-            Object.keys(user._doc).forEach(function(field) {
-                tempUserData[field] = user[field];
-            });
+            // This does not seem to work for nested fields, e.g. 'local.email':
+                /*
+                    // copy the credentials for the user
+                    Object.keys(user._doc).forEach(function(field) {
+                        tempUserData[field] = user[field];
+                    });
+                */
+                
+            // copy credentials using ECMA 6>:
+            tmpUserData = Object.assign(tmpUserData, user._doc);
             tempUserData[options.URLFieldName] = randtoken.generate(options.URLLength);
             callback(new options.tempUserModel(tempUserData));
         }
